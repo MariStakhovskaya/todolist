@@ -3,10 +3,7 @@ import { IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 
-type AddItemFormPropsType ={
-    addItem: (title: string)=> void
-}
-
+export type AddItemFormPropsType ={addItem: (title: string)=> void }
 
 const AddItemForm =React.memo(function (props: AddItemFormPropsType) {
     console.log("AddItemForm called")

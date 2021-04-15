@@ -1,11 +1,10 @@
-import React, {ChangeEvent, useCallback} from "react";
+import React, { useCallback} from "react";
 import {FilterValueType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, ButtonGroup, Checkbox, IconButton} from "@material-ui/core";
+import {Button, ButtonGroup, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
-
 
 export  type TaskType = {
     id: string
@@ -41,15 +40,12 @@ export const Todolist = React.memo(function (props: PropsType) {
     const tasks = taskForTodoList.map(taskObj => {
         return <Task
             key={taskObj.id}
-            taskId={taskObj.id}
-            title = {taskObj.title}
+            task={taskObj}
             todolistId = {props.id}
-            isDone = {taskObj.isDone}
             removeTask = {props.removeTask}
             changeStatus = {props.changeStatus}
             changeTaskTitle = {props.changeTaskTitle}
         />
-
     })
 
     const onAllClickHandler = () => {props.changeFilter(props.id,"all")}
