@@ -37,9 +37,8 @@ const AddItemForm =React.memo(function (props: AddItemFormPropsType) {
     }
 
 
-    return (
-    <div>
-            <TextField variant="outlined" size="small"  value={title}
+    return (<div>
+        <TextField variant="outlined" size="small"  value={title}
                         onChange={onChangeHandler}
                         onKeyPress={onKeyPressHandler}
                        error={!!error}
@@ -49,8 +48,8 @@ const AddItemForm =React.memo(function (props: AddItemFormPropsType) {
         <IconButton color="primary" onClick={addItem}>
             <AddBox/>
         </IconButton>
+        </div>
 
-    </div>
     )
 })
 

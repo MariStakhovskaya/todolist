@@ -26,14 +26,14 @@ const baseArgs = {
 export const TaskIsDoneExample = Template.bind({});
 TaskIsDoneExample.args = {
     ...baseArgs,
-    task: {taskId: 1,isDone: true ,title: 'JS'},
+    task: {id: '1',title: 'JS', isDone: true},
     todolistId: '1'
 };
 
 export const TaskIsNotDoneExample = Template.bind({});
 TaskIsNotDoneExample.args = {
     ...baseArgs,
-    task: {taskId: 2,isDone: false ,title: 'HTML'},
+    task: {id: '2',title: 'HTML', isDone: false },
     todolistId: '2'
 };
 
