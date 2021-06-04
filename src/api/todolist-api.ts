@@ -3,7 +3,6 @@ import axios from 'axios'
 const settings = {
     withCredentials: true,
     headers: {
-        // Не забываем заменить API-KEY на собственный
         'API-KEY': 'e47adcfd-8887-4cee-83a9-679e6cab73f4'
     }
 }
@@ -20,31 +19,41 @@ type TodolistType= {
     title: string
 }
 
-type CreateTodolistResponseType = {
+type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    data: {
-        item: TodolistType
-    }
+    data: D
+}
+type TaskItemType = {
+    description: string
+    title: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+type updateTask = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
 }
 
-type UpdateTodolistResponseType = {
-    resultCode: number
-    messages: Array<string>
-    data: {}
+type GetTasksResponse = {
+    totalCount: number
+    error: string | null
+    items: TaskItemType[]
 }
-
-type DeleteTodolistResponseType = {
-    resultCode: number
-    messages: Array<string>
-    data: {}
-}
-
-
 
 export const todolistAPI = {
     updateTodolist(todolistId: string, title: string) {
-        const promise = instance.put<UpdateTodolistResponseType>(`todo-lists/${todolistId}`, {title: title})
+        const promise = instance.put<ResponseType>(`todo-lists/${todolistId}`, {title: title})
         return promise
     },
 
@@ -54,15 +63,32 @@ export const todolistAPI = {
     },
 
     createNewTodolist(title: string){
-        const promise = instance.post<CreateTodolistResponseType>('todo-lists', {title: title})
+        const promise = instance.post<ResponseType<{item: TodolistType}>>('todo-lists', {title: title})
         return promise
     },
 
     deleteTodolist(todolistId: string){
-        const promise = instance.delete<DeleteTodolistResponseType>(`todo-lists/${todolistId}`)
+        const promise = instance.delete<ResponseType>(`todo-lists/${todolistId}`)
         return promise
     }
+}
 
-
+export const taskAPI = {
+    getTasks(todolistId: string){
+        const promise = instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
+        return promise
+    },
+    deleteTask(todolistId: string, taskId:string){
+        const promise = instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return promise
+    },
+    createTask(todolistId: string, taskTitle: string){
+        const promise = instance.post<ResponseType<TaskItemType>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
+        return promise
+    },
+    updateTasks(todolistId: string, taskId:string, model: updateTask){
+        const promise = instance.put<ResponseType<TaskItemType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return promise
+    }
 }
 
