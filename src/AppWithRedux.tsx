@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {TaskType, Todolist} from "./Todolist";
+import { Todolist} from "./Todolist";
 import AddItemForm from "./AddItemForm";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
@@ -10,31 +10,25 @@ import Paper from "@material-ui/core/Paper";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
-    RemoveTodoListAC,
+    ChangeTodoListTitleAC, FilterValueType,
+    RemoveTodoListAC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {TaskItemType, TaskStatuses} from "./api/todolist-api";
 
 
-export type FilterValueType = "all" | "active" | "completed"
 
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValueType
-
-}
 
 export type TasksStateType = {
-    [key: string] : Array<TaskType>
+    [key: string] : Array<TaskItemType>
 
 }
 
 function AppWithRedux() {
 
-    const todoLists = useSelector<AppRootStateType,Array<TodolistType>>(state => state.todolists)
+    const todoLists = useSelector<AppRootStateType,Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType,TasksStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
@@ -52,8 +46,8 @@ function AppWithRedux() {
         dispatch(addTaskAC(title, todoListID ))
     }, [dispatch])
 
-    const changeStatus = useCallback( (taskID: string, isDone: boolean, todoListID: string) =>{
-        dispatch(changeTaskStatusAC(taskID, isDone,todoListID ))
+    const changeStatus = useCallback( (taskID: string, status: TaskStatuses, todoListID: string) =>{
+        dispatch(changeTaskStatusAC(taskID, status,todoListID ))
     }, [dispatch])
 
     const changeTaskTitle = useCallback( (taskID: string, title: string, todoListID: string) => {
