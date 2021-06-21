@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import { Todolist} from "./Todolist";
 import AddItemForm from "./AddItemForm";
@@ -10,13 +10,13 @@ import Paper from "@material-ui/core/Paper";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC, FilterValueType,
-    RemoveTodoListAC, TodolistDomainType,
+    ChangeTodoListTitleAC, fetchTodolistsTC, FilterValueType,
+    RemoveTodoListAC, SetTodoListsAC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {TaskItemType, TaskStatuses} from "./api/todolist-api";
+import {TaskItemType, TaskStatuses, todolistAPI} from "./api/todolist-api";
 
 
 
@@ -33,6 +33,10 @@ function AppWithRedux() {
 
     const dispatch = useDispatch()
 
+// Реакт выполни этот юзэффект, зависимости нет, поэтому выполни его один раз, когда ты вмонтируешься
+    useEffect(() => {
+        dispatch(fetchTodolistsTC())
+    }, [])
 
     const changeFilter = useCallback((todoListID: string, filterValue: FilterValueType) => {
         dispatch(ChangeTodoListFilterAC(todoListID,filterValue))
