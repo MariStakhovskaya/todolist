@@ -11,11 +11,11 @@ import Paper from "@material-ui/core/Paper";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC, ChangeTodoListTitleTC, FilterValueType,
+    ChangeTodoListTitleAC, FilterValueType,
     RemoveTodoListAC,
     todoListsReducer
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, updateTaskAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {TaskItemType, TaskPriorities, TaskStatuses} from "./api/todolist-api";
 
 
@@ -95,12 +95,12 @@ function AppWithReducers() {
     }
 
     function changeStatus (taskID: string, status: TaskStatuses, todoListID: string) {
-       const action = changeTaskStatusAC(taskID, status,todoListID )
+       const action = updateTaskAC(taskID, {status},todoListID )
         dispatchToTasks(action)
     }
 
     function changeTaskTitle (taskID: string, title: string, todoListID: string) {
-       const action = changeTaskTitleAC(taskID,title,todoListID)
+       const action = updateTaskAC(taskID, {title},todoListID)
         dispatchToTasks(action)
     }
     function removeTodolist( todoListID: string) {

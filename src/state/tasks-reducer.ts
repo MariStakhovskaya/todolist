@@ -21,9 +21,9 @@ export type AddTaskActionType = {
 }
 
 export type ChangeStatusTaskActionType = {
-    type: 'CHANGE-STATUS-TASK',
+    type: 'UPDATE-TASK',
     taskId: string,
-    status: TaskStatuses,
+    model: UpdateDomainTaskModelType,
     todolistId: string
 }
 
@@ -65,7 +65,7 @@ export const tasksReducer = (state=initialState, action: ActionsType) => {
 
            return copyState1
 
-        case 'CHANGE-STATUS-TASK': {
+        case 'UPDATE-TASK': {
 
             return {
                 ...state,
@@ -73,7 +73,7 @@ export const tasksReducer = (state=initialState, action: ActionsType) => {
                     if (task.id !== action.taskId) {
                         return {...task}
                     } else {
-                        return {...task, status: action.status}
+                        return {...task, ...action.model}
                     }
                 })
             }}
@@ -135,10 +135,10 @@ export const addTaskAC = (task: TaskItemType): AddTaskActionType => {
             }
 }
 
-export const changeTaskStatusAC = (taskId: string, status:TaskStatuses, todolistId: string): ChangeStatusTaskActionType => {
-    return { type: 'CHANGE-STATUS-TASK',
+export const updateTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string): ChangeStatusTaskActionType => {
+    return { type: 'UPDATE-TASK',
         taskId: taskId,
-        status: status,
+        model: model,
         todolistId: todolistId
     }
 }
@@ -188,7 +188,16 @@ export const addTaskTC = (title: string, todoListID: string) => {
     }
 }
 
-export  const changeTaskStatusTC = (taskID: string, status: TaskStatuses, todoListID: string) => {
+export type UpdateDomainTaskModelType = {
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: number
+    startDate?: string
+    deadline?: string
+}
+
+export  const changeTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelType, todoListID: string) => {
     return (dispatch:Dispatch, getState: () => AppRootStateType) => {
         const state = getState();
        const task = state.tasks[todoListID].find(t => t.id ===taskID)
@@ -196,17 +205,18 @@ export  const changeTaskStatusTC = (taskID: string, status: TaskStatuses, todoLi
             throw new Error('task not found in the state')
             return
         }
-        const model: updateTask ={
+        const apiModel: updateTask ={
             title: task.title,
             description: task.description,
-            status: status,
+            status: task.status,
             priority: task.priority,
             startDate: task.startDate,
-            deadline: task.deadline
+            deadline: task.deadline,
+            ...domainModel
         }
-        taskAPI.updateTasks(todoListID, taskID, model)
+        taskAPI.updateTasks(todoListID, taskID, apiModel)
             .then(res => {
-                dispatch(changeTaskStatusAC(taskID, status, todoListID))
+                dispatch(updateTaskAC(taskID, domainModel, todoListID))
             })
     }
 }
