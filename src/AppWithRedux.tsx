@@ -8,10 +8,10 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-    AddTodoListAC,
+    AddTodoListAC, addTodolistTC,
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC, fetchTodolistsTC, FilterValueType,
-     removeTodolistTC, TodolistDomainType,
+    removeTodolistTC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {
      addTaskTC,
@@ -70,7 +70,7 @@ function AppWithRedux() {
     }, [dispatch])
 
    const addTodoList = useCallback( (title: string) => {
-        dispatch(AddTodoListAC(title))
+        dispatch(addTodolistTC(title))
     }, [dispatch])
 
     const changeTodoListTitle = useCallback( (todoListID: string, title:string) =>{
