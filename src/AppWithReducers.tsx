@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC, FilterValueType,
+    ChangeTodoListTitleAC, ChangeTodoListTitleTC, FilterValueType,
     RemoveTodoListAC,
     todoListsReducer
 } from "./state/todolists-reducer";
