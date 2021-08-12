@@ -52,7 +52,7 @@ export type TaskItemType = {
     order: number
     addedDate: string
 }
-type updateTask = {
+export type updateTask = {
     title: string
     description: string
     status: number
