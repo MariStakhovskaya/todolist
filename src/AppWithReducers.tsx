@@ -4,7 +4,7 @@ import { Todolist} from "./Todolist";
 import { v1 } from 'uuid';
 import AddItemForm from "./AddItemForm";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
-import {Menu, Wallpaper} from "@material-ui/icons";
+import {Menu} from "@material-ui/icons";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -15,7 +15,7 @@ import {
     RemoveTodoListAC,
     todoListsReducer
 } from "./state/todolists-reducer";
-import {addTaskAC, updateTaskAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, updateTaskAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {TaskItemType, TaskPriorities, TaskStatuses} from "./api/todolist-api";
 
 
