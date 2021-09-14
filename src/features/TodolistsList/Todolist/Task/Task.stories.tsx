@@ -1,8 +1,8 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 import {action} from "@storybook/addon-actions";
-import Task, {TaskPropsType} from "../Task";
-import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import Task, {TaskPropsType} from "./Task";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todolist-api";
 
 
 

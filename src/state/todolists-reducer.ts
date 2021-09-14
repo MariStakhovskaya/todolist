@@ -64,6 +64,8 @@ export const ChangeTodoListTitleTC =(title: string, todoListID: string) => {
 export type AddTodoListActionType = ReturnType<typeof AddTodoListAC>
 export type RemoveTodoListActionType = ReturnType<typeof RemoveTodoListAC>
 export type SetTodoListActionType = ReturnType<typeof SetTodoListsAC>
+export type ChangeTodoListFilterActionType = ReturnType<typeof ChangeTodoListFilterAC>
+export type ChangeTodoListTitleActionType = ReturnType<typeof ChangeTodoListTitleAC>
 
 type ActionType = ReturnType<typeof ChangeTodoListFilterAC> | ReturnType<typeof ChangeTodoListTitleAC> | AddTodoListActionType | RemoveTodoListActionType | SetTodoListActionType
 

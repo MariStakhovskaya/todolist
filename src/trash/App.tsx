@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import './App.css';
-import { Todolist} from "./Todolist";
+import '../app/App.css';
+import { Todolist} from "../features/TodolistsList/Todolist/Todolist";
 import { v1 } from 'uuid';
-import AddItemForm from "./AddItemForm";
+import AddItemForm from "../components/AddItemForm/AddItemForm";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu, Wallpaper} from "@material-ui/icons";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import {FilterValueType, TodolistDomainType} from "./state/todolists-reducer";
-import {TaskItemType, TaskPriorities, TaskStatuses} from "./api/todolist-api";
+import {FilterValueType, TodolistDomainType} from "../state/todolists-reducer";
+import {TaskItemType, TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 
 
