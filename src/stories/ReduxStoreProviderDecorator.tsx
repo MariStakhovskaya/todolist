@@ -6,13 +6,15 @@ import {todoListsReducer} from '../state/todolists-reducer'
 import {v1} from 'uuid'
 import {AppRootStateType} from '../state/store'
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {appReducer} from "../state/app-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todoListsReducer
+    todolists: todoListsReducer,
+    app: appReducer
 })
 
-const initialGlobalState = {
+const initialGlobalState:AppRootStateType = {
     todolists: [
         {id: "todolistId1", title: "What to learn", filter: "all", order: 0 , addedDate: ''},
         {id: "todolistId2", title: "What to buy", filter: "all",order: 0 , addedDate: '' }
@@ -34,7 +36,10 @@ const initialGlobalState = {
                 description: '', priority: TaskPriorities.Low, startDate: '', deadline: '',
                 todoListId:"todolistId2", order: 0, addedDate: ''}
         ]
-    }
+    },
+    app: {status: 'idle',
+        error: "some errorrrr"}
+
 };
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);

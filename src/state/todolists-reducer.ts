@@ -1,5 +1,6 @@
 import {todolistAPI, TodolistType} from "../api/todolist-api";
 import { Dispatch } from "redux";
+import {setStatusAC, SetStatusActionType} from "./app-reducer";
 
 const initialState:Array<TodolistDomainType> = []
 
@@ -35,9 +36,11 @@ export const SetTodoListsAC = (todoLists: Array<TodolistType>) => {return {type:
 
 // thunks
 export const fetchTodolistsTC = () =>  (dispatch: Dispatch<ActionType>) => {
+    dispatch(setStatusAC('loading'))
         todolistAPI.getTodolistsAll()
             .then(res => {
                 dispatch(SetTodoListsAC(res.data))
+                dispatch(setStatusAC('succeeded'))
             })
 }
 export const removeTodolistTC = (todolistId: string) =>  (dispatch: Dispatch<ActionType>) => {
@@ -47,9 +50,11 @@ export const removeTodolistTC = (todolistId: string) =>  (dispatch: Dispatch<Act
             })
 }
 export const addTodolistTC = (title: string) =>  (dispatch: Dispatch<ActionType>) => {
+    dispatch(setStatusAC('loading'))
         todolistAPI.createNewTodolist(title)
             .then(res => {
                 dispatch(AddTodoListAC(res.data.data.item))
+                dispatch(setStatusAC('succeeded'))
             })
 }
 export const ChangeTodoListTitleTC =(title: string, todoListID: string) => {
@@ -67,7 +72,12 @@ export type SetTodoListActionType = ReturnType<typeof SetTodoListsAC>
 export type ChangeTodoListFilterActionType = ReturnType<typeof ChangeTodoListFilterAC>
 export type ChangeTodoListTitleActionType = ReturnType<typeof ChangeTodoListTitleAC>
 
-type ActionType = ReturnType<typeof ChangeTodoListFilterAC> | ReturnType<typeof ChangeTodoListTitleAC> | AddTodoListActionType | RemoveTodoListActionType | SetTodoListActionType
+type ActionType = ReturnType<typeof ChangeTodoListFilterAC>
+    | ReturnType<typeof ChangeTodoListTitleAC>
+    | AddTodoListActionType
+    | RemoveTodoListActionType
+    | SetTodoListActionType
+    | SetStatusActionType
 
 export type FilterValueType = "all" | "active" | "completed"
 export type TodolistDomainType = TodolistType & {
